@@ -101,4 +101,3 @@ jobs:
           kustomize edit set image frontend=$ECR_REPOSITORY:$IMAGE_TAG
           kustomize build . | kubectl apply --validate=false -f -
           kubectl rollout status deployment/frontend -n default --timeout=180s
-'@ | Set-Content -Path .github\workflows\frontend-cd.yaml -Encoding utf8

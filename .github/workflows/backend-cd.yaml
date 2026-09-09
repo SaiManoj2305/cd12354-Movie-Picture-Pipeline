@@ -99,4 +99,3 @@ jobs:
           kustomize edit set image backend=$ECR_REPOSITORY:$IMAGE_TAG
           kustomize build . | kubectl apply --validate=false -f -
           kubectl rollout status deployment/backend -n default --timeout=180s
-'@ | Set-Content -Path .github\workflows\backend-cd.yaml -Encoding utf8
