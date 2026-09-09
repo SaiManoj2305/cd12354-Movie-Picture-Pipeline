@@ -1,8 +1,7 @@
-FROM public.ecr.aws/docker/library/python:3.10-alpine
-ENV FLASK_RUN_HOST=0.0.0.0
+FROM public.ecr.aws/docker/library/python:3.10-alpine@sha256:6e67d897508774ad8f2250bbf0c414e029d3bc612b565017fba334b6193a798d
 
-WORKDIR /
 RUN adduser -u 1000 -D app
+
 RUN apk update && \
   apk add \
   pcre \
@@ -14,11 +13,17 @@ RUN apk update && \
   libffi-dev \
   && pip install pipenv
 
-RUN mkdir -p /var/www/app && mkdir /app
+WORKDIR /app
 
-COPY Pipfile* /app
-RUN cd /app && pipenv install --system --deploy
+COPY Pipfile* /app/
+RUN pipenv install --system --skip-lock
 
-COPY . /app
+COPY . /app/
 
-CMD uwsgi --http :5000 --master --enable-threads -s /var/www/app/app.sock --manage-script-name --mount /=app:app
+RUN chown -R app:app /app
+
+USER app
+
+EXPOSE 5000
+
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "wsgi:app"]
