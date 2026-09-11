@@ -98,3 +98,16 @@ jobs:
           kustomize edit set image backend=$ECR_REPOSITORY:$IMAGE_TAG
           kustomize build . | kubectl apply --validate=false -f -
           kubectl rollout status deployment/backend -n default --timeout=180s
+
+      - name: Verify Backend Deployment and Pods
+        run: |
+          echo "=== Backend Pod Status ==="
+          kubectl get pods -l app=backend -o wide
+          echo "=== Backend Service Status ==="
+          kubectl get service backend -o wide
+
+      - name: Output Backend Service URL
+        run: |
+          echo "=== Backend LoadBalancer Ingress DNS ==="
+          kubectl get service backend -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
+          echo ""

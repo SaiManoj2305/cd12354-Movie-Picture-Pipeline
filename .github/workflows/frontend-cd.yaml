@@ -102,3 +102,16 @@ jobs:
           kustomize edit set image frontend=$ECR_REPOSITORY:$IMAGE_TAG
           kustomize build . | kubectl apply --validate=false -f -
           kubectl rollout status deployment/frontend -n default --timeout=180s
+
+      - name: Verify Frontend Deployment and Pods
+        run: |
+          echo "=== Frontend Pod Status ==="
+          kubectl get pods -l app=frontend -o wide
+          echo "=== Frontend Service Status ==="
+          kubectl get service frontend -o wide
+
+      - name: Output Frontend Service URL
+        run: |
+          echo "=== Frontend LoadBalancer Ingress DNS ==="
+          kubectl get service frontend -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
+          echo ""
