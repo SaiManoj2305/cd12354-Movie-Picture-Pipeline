@@ -11,7 +11,7 @@ on:
 env:
   AWS_DEFAULT_REGION: us-east-1
   CLUSTER_NAME: cluster
-  ECR_REPOSITORY: 492941722367.dkr.ecr.us-east-1.amazonaws.com/frontend
+  ECR_REPOSITORY: 734087413977.dkr.ecr.us-east-1.amazonaws.com/frontend
 
 jobs:
   lint:
