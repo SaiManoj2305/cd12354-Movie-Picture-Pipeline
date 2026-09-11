@@ -1,4 +1,4 @@
-name: Backend Continuous Delivery
+name: Backend Continuous Deployment
 
 on:
   push:
@@ -57,7 +57,7 @@ jobs:
       - name: Run Pytest
         working-directory: starter/backend
         run: |
-          pytest || true
+          pytest
 
   deploy:
     runs-on: ubuntu-latest
