@@ -81,7 +81,7 @@ jobs:
         working-directory: starter/frontend
         env:
           IMAGE_TAG: ${{ github.sha }}
-          REACT_APP_MOVIE_API_URL: "http://a055ebb48399047cbb8b2f38ed36122c-782230703.us-east-1.elb.amazonaws.com"
+          REACT_APP_MOVIE_API_URL: "http://a6d0f406672034ed7b7e11ef47992266-1241090634.us-east-1.elb.amazonaws.com"
         run: |
           docker build \
             --build-arg REACT_APP_MOVIE_API_URL="${REACT_APP_MOVIE_API_URL}" \
